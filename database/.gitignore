@@ -1,0 +1,5 @@
+*.sqlite
+*.sqlite-journal
+buhin_list*
+board_job*
+detailed_records_of_kibans*
