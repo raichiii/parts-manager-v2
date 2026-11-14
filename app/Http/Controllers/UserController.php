@@ -117,9 +117,10 @@ class UserController extends Controller
      */
     public function getAll()
     {
-        $users = $this->redisService->get_and_set('all_users_with_roles', function () {
-            return User::with('roles')->get();
-        });
+        // $users = $this->redisService->get_and_set('all_users_with_roles', function () {
+        //     return User::with('roles')->get();
+        // });
+        $users = User::with('roles')->get();
         return response()->json($users);
     }
 

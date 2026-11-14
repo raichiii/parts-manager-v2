@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,7 +15,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // 開発用のユーザー
-        $new_user = App\User::create([
+        $new_user = User::create([
             'username' => 'admin',
             'name' => '管理者',
             'email' => 'admin@test.com',
@@ -24,7 +25,23 @@ class UsersTableSeeder extends Seeder
         $new_user->roles()->attach(SYSTEM_ADMIN);
         $new_user->roles()->attach(SERVICE_USER);
 
-        $new_user = App\User::create([
+        $new_user = User::create([
+            'username' => 'yamada',
+            'name' => '山田孝之',
+            'email' => 'tyamada@test.com',
+            'password' => Hash::make('secret'),
+            'remember_token' => Str::random(10),
+        ]);
+
+        $new_user = User::create([
+            'username' => 'abe',
+            'name' => '阿部寛',
+            'email' => 'habe@test.com',
+            'password' => Hash::make('secret'),
+            'remember_token' => Str::random(10),
+        ]);
+
+        $new_user = User::create([
             'username' => 'flect',
             'name' => '株式会社フレクト',
             'email' => 'flect@test.com',
@@ -32,7 +49,7 @@ class UsersTableSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        $new_user = App\User::create([
+        $new_user = User::create([
             'username' => 'unknown',
             'name' => '不明',
             'email' => 'unknown@test.com',
@@ -40,28 +57,6 @@ class UsersTableSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        $new_user = App\User::create([
-            'username' => 'raichi',
-            'name' => 'Raichi',
-            'email' => 'raichi@test.com',
-            'password' => Hash::make('secret'),
-            'remember_token' => Str::random(10),
-        ]);
-
-        $new_user = App\User::create([
-            'username' => 'cherii',
-            'name' => 'Cherii',
-            'email' => 'cherii@test.com',
-            'password' => Hash::make('secret'),
-            'remember_token' => Str::random(10),
-        ]);
-
-        $new_user = App\User::create([
-            'username' => 'softbank',
-            'name' => 'ソフトバンク',
-            'email' => 'test@softbank.com',
-            'password' => Hash::make('secret'),
-            'remember_token' => Str::random(10),
-        ]);
+        User::factory()->count(10)->create();
     }
 }

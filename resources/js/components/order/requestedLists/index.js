@@ -8,7 +8,7 @@ Vue.component('requested-lists-index', {
                 field: "checkbox",
                 title: '全選択',
                 formatter: function (value, row, index) {
-                    return '<div class="text-center pt-1"> \
+                    return '<div class="text-center"> \
                         <input type="checkbox" class="check-part" name="ids[]" value="' + row.id + '"></div>'
                 }
             },

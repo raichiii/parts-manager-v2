@@ -10,9 +10,15 @@ use App\Models\Board\Part;
 use App\Models\Board\PrintCircuitBoard;
 use App\Models\Board\Other;
 
+use Database\Factories\OrderedListFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+#[UseFactory(OrderedListFactory::class)]
 class OrderedList extends Model
 {
+    use HasFactory;
+
     protected $guarded = ['id', 'requested_user_id', 'requested_at', 'created_at'];
     protected $casts = [
         'purchase_at' => 'datetime',

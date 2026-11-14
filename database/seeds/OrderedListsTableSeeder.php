@@ -83,5 +83,7 @@ class OrderedListsTableSeeder extends Seeder
 
             $this->seederService->create_unregistered_model($orderedList, $csv['model_no'], $csv['supplier']);
         }
+
+        OrderedList::factory()->count(10)->create();
     }
 }

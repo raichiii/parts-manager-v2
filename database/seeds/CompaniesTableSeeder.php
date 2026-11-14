@@ -27,7 +27,6 @@ class CompaniesTableSeeder extends Seeder
      */
     public function run()
     {
-        // App\Models\Address\Company::factory(30)->create();
         $csvArray = [];
         try {
             $csvArray = Csv::uploadedCsvToArray(__DIR__ . '/seed/company.csv', $this->data);
@@ -171,5 +170,7 @@ class CompaniesTableSeeder extends Seeder
                 $company->classifications()->sync($classification_id);
             }
         }
+
+        Company::factory()->count(30)->create();
     }
 }

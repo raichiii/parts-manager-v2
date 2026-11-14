@@ -98,5 +98,7 @@ class PurchasedListsTableSeeder extends Seeder
             $this->seederService->create_unregistered_model($purchasedList, $csv['model_no'], $csv['supplier']);
 
         }
+
+        PurchasedList::factory()->count(10)->create();
     }
 }

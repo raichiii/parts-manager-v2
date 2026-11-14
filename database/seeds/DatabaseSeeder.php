@@ -2,6 +2,7 @@
 
 use App\Models\Order\RequestedList;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Redis;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Redis::flushDB();
         $this->call(RolesTableSeeder::class);
         // ロールを持たせたテストユーザーを作成しているためRolesTableSeederの後に実行
         $this->call(UsersTableSeeder::class);

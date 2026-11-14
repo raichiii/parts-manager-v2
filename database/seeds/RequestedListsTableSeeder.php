@@ -80,5 +80,7 @@ class RequestedListsTableSeeder extends Seeder
 
             $this->seederService->create_unregistered_model($requestedList, $csv['model_no'], $csv['supplier']);
         }
+
+        RequestedList::factory()->count(100)->create();
     }
 }

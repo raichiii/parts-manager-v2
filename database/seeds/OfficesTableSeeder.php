@@ -99,5 +99,7 @@ class OfficesTableSeeder extends Seeder
 
             }
         }
+
+        Office::factory()->count(200)->create();
     }
 }

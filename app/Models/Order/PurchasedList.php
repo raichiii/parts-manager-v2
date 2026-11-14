@@ -11,8 +11,15 @@ use App\Models\Board\Part;
 use App\Models\Board\PrintCircuitBoard;
 use App\Models\Board\Other;
 
+use Database\Factories\PurchasedListFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+#[UseFactory(PurchasedListFactory::class)]
 class PurchasedList extends Model
 {
+    use HasFactory;
+
     use SoftDeletes;
 
     protected $guarded = ['id', 'requested_user_id', 'requested_at', 'ordered_user_id', 'ordered_at', 'created_at'];

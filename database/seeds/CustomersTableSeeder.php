@@ -79,5 +79,6 @@ class CustomersTableSeeder extends Seeder
 
             }
         }
+        Customer::factory()->count(400)->create();
     }
 }
