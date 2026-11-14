@@ -31,8 +31,6 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('secret'),
             'remember_token' => Str::random(10),
         ]);
-        $new_user->roles()->attach(SYSTEM_ADMIN);
-        $new_user->roles()->attach(SERVICE_USER);
 
         $new_user = App\User::create([
             'username' => 'unknown',
