@@ -63,14 +63,14 @@ class UserController extends Controller
      */
     public function update(User $user, UserRequest $request)
     {
-        if (!(auth()->user() == $user || Gate::allows('isSystemAdmin'))) {
+        if (!(auth()->id() == $user->id || Gate::allows('isSystemAdmin'))) {
             return abort(403);
         }
         try {
             if ($request->roles !== $user->roles->pluck('id')->all()) {
                 $this->redisService->clear('all_users_with_roles');
             }
-            if (auth()->user() == $user) {
+            if (auth()->id() == $user->id) {
                 $user->username = $request->username;
                 $user->name = $request->name;
                 $user->email = $request->email;
