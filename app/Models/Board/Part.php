@@ -8,8 +8,14 @@ use App\Models\Order\RequestedList;
 use App\Models\Order\OrderedList;
 use App\Models\Order\PurchasedList;
 
+use Database\Factories\PartFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+#[UseFactory(PartFactory::class)]
 class Part extends Model
 {
+    use HasFactory;
     protected $guarded = ['id', 'created_at'];
 
     public function thing()

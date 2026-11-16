@@ -51,9 +51,9 @@ class PrintCircuitBoardsTableSeeder extends Seeder
             $part = new PrintCircuitBoard();
             $part->thing_id = $thing->id;
             $part->valid_years = $csv['valid_years'];
-            // $part->description = $csv['description'];
-            $part->ordered_at = isset($csv['ordered_at'])? $csv['ordered_at']: $today;
             $part->save();
         }
+
+        PrintCircuitBoard::factory()->count(30)->create();
     }
 }

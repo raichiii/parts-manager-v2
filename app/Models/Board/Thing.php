@@ -6,8 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Address\Company;
 
+use Database\Factories\ThingFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+
+#[UseFactory(ThingFactory::class)]
 class Thing extends Model
 {
+    use HasFactory;
+
     use SoftDeletes;
 
     protected $guarded = ['id', 'created_at'];

@@ -19,7 +19,6 @@ class CreatePrintCircuitBoardsTable extends Migration
             $table->integer('thing_id')->unsigned()->unique()->comment('基板');
             $table->tinyInteger('valid_years')->nullable()->comment('保管年数');
             $table->string('description', 255)->nullable()->comment('詳細');
-            $table->dateTime('ordered_at')->nullable()->comment('注文日');
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 

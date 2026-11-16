@@ -84,5 +84,7 @@ class PartsTableSeeder extends Seeder
             $part->updated_at = $csv['registered_at'];
             $part->save();
         }
+
+        Part::factory()->count(30)->create();
     }
 }

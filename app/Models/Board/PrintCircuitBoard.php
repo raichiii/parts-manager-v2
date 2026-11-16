@@ -5,8 +5,14 @@ namespace App\Models\Board;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Address\Company;
 
+use Database\Factories\PrintCircuitBoardFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+#[UseFactory(PrintCircuitBoardFactory::class)]
 class PrintCircuitBoard extends Model
 {
+    use HasFactory;
     protected $guarded = ['id', 'created_at'];
     protected $casts = [
         'ordered_at' => 'datetime',

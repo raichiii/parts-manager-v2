@@ -1,62 +1,53 @@
 Vue.component('print-circuit-boards-index', {
     data() {
         return {
-            columns: [{
-                field: "id",
-                title: "",
-                sortable: true,
-            },
-            {
-                field: "thing.model_no",
-                title: "基板名",
-                filterControl: "input",
-                sortable: true,
-            },
-            {
-                field: "maker",
-                title: "メーカー",
-                filterControl: "input",
-                sortable: true,
-                formatter: function (value, row, index) {
-                    if(value.short_name){
-                        return '<a href="/address/companies/' + value.id + '"><span class="table-supplier">' + value.short_name + '</span></a>'
-                    }else{
-                        return '<a href="/address/companies/' + value.id + '"><span class="table-supplier">' + value.name + '</span></a>'
+            columns: [
+                {
+                    field: "id",
+                    title: "",
+                    sortable: true,
+                },
+                {
+                    field: "thing.model_no",
+                    title: "基板名",
+                    filterControl: "input",
+                    sortable: true,
+                },
+                {
+                    field: "maker",
+                    title: "メーカー",
+                    filterControl: "input",
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        if(value.short_name){
+                            return '<a href="/address/companies/' + value.id + '"><span class="table-supplier">' + value.short_name + '</span></a>'
+                        }else{
+                            return '<a href="/address/companies/' + value.id + '"><span class="table-supplier">' + value.name + '</span></a>'
+                        }
                     }
-                }
-            },
-            {
-                field: "valid_years",
-                title: "保管期間",
-                filterControl: "input",
-                sortable: true,
-                formatter: function (value, row, index) {
-                    if(value === -1){
-                        return '永久'
-                    }else if(!value){
-                        return '廃業'
-                    }else{
-                        return value + '年'
+                },
+                {
+                    field: "valid_years",
+                    title: "保管期間",
+                    filterControl: "input",
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        if(value === -1){
+                            return '永久'
+                        }else if(!value){
+                            return '廃業'
+                        }else{
+                            return value + '年'
+                        }
                     }
-                }
-            },
-            {
-                field: "description",
-                title: "詳細",
-                filterControl: "input",
-                sortable: true,
-            },
-            {
-                field: "ordered_at",
-                title: "注文日",
-                filterControl: "input",
-                sortable: true,
-                formatter: (value, row, index) => {
-                    if(value){
-                        return this.dateFormat(value)
-                    }
-                }
-            },]
+                },
+                {
+                    field: "description",
+                    title: "詳細",
+                    filterControl: "input",
+                    sortable: true,
+                },
+            ]
         }
     },
     methods: {
