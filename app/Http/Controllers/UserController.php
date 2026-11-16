@@ -47,7 +47,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if (auth()->user() == $user || Gate::allows('isSystemAdmin')) {
+        if (auth()->id() == $user->id || Gate::allows('isSystemAdmin')) {
             $roles = Role::all();
             $checkedRoles = $user->roles()->pluck('roles.id')->toArray();
             return view('users.edit', compact('user', 'roles', 'checkedRoles'));
@@ -91,7 +91,7 @@ class UserController extends Controller
      */
     public function updatePassword(User $user, Request $request)
     {
-        if (!(auth()->user() == $user || Gate::allows('isSystemAdmin'))) {
+        if (!(auth()->id() == $user->id || Gate::allows('isSystemAdmin'))) {
             return abort(403);
         }
         if (!password_verify($request->password, $user->password)) {
@@ -101,7 +101,7 @@ class UserController extends Controller
             return redirect()->route('users.edit', ['user' => $user])->with('danger', 'パスワードが一致しません');
         }
         try {
-            if (auth()->user() == $user) {
+            if (auth()->id() == $user->id) {
                 $user->password = Hash::make($request->new_password);
                 $user->save();
             }

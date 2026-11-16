@@ -21,19 +21,25 @@
             <li>部署：{{ $customer->department}}</li>
             <li>肩書き：{{ $customer->position}}</li>
             <li>電話番号：
+                @if($customer->phones)
                 @foreach($customer->phones as $phone)
                 {{ $phone }}
                 @endforeach
+                @endif
             </li>
             <li>Fax：
+                @if($customer->faxes)
                 @foreach($customer->faxes as $fax)
                 {{ $fax }}
                 @endforeach
+                @endif
             </li>
             <li>メールアドレス：
+                @if($customer->emails)
                 @foreach($customer->emails as $email)
                 {{ $email }}
                 @endforeach
+                @endif
             </li>
             <li>備考：{{ $customer->note}}</li>
         </ul>

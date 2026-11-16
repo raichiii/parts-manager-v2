@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Order\RequestedList;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Redis;
 

@@ -37,7 +37,7 @@ class Part extends Model
      */
     public function requestedLists()
     {
-        return $this->hasMany(requestedList::class, 'supplier_id');
+        return $this->hasMany(RequestedList::class, 'supplier_id');
     }
 
     /**
