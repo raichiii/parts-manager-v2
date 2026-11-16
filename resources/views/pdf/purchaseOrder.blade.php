@@ -116,10 +116,10 @@
             <li class="r">
                 <div class="left">
                     <div class="large left">{{$date}}<br></div>
-                    (有)ハイテクラボ<br>
+                    {{ env('COMPANY_NAME', '！！会社名未設定！！') }}<br>
                     豊中市蛍池西町2-14-14<br>
-                    TEL 06-6849-8883<br>
-                    FAX 06-6849-5337<br>
+                    TEL {{ env('COMPANY_PHONE_NUMBER', '') }}<br>
+                    FAX {{ env('COMPANY_FAX_NUMBER', '') }}<br>
                     担当: {{auth()->user()->name}}<br>
                 </div>
             </li>

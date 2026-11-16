@@ -25,7 +25,7 @@
                 <input type="radio" id="mode0" v-model.number="mode" value="0" />
                 <label for="mode0">通常モード</label>
                 <input type="radio" id="mode1" v-model.number="mode" value="1" />
-                <label for="mode1">ハイテクラボモード</label>
+                <label for="mode1">社長モード</label>
             </div>
             <div id="chatgpt-loading" class="spinner-border" role="status" v-show="isLoading">
                 <span class="sr-only">Loading...</span>

@@ -1,7 +1,7 @@
 <div id="sidebar-btn">
     <i class="fas fa-bars"></i>
 </div>
-<nav id="sidebar-inner" class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+<nav id="sidebar-inner" class="navbar navbar-expand-lg navbar-light bg-light border-bottom" style="z-index: 99;">
     <div id="sidebar-btn-space"></div>
     <div id="parts-manager-logo">
         <a href="{{ route('home') }}">
@@ -12,15 +12,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div id="navbarSupportedContent" class="collapse navbar-collapse text-right">
-        @auth
-        <div id="purchase-order-btn">
-            <a href="{{route('requestedLists.create')}}">
-                    <i class="fas fa-plus-circle"></i>購入依頼の新規作成
-            </a>
-        </div>
-        @endauth
         <ul class="navbar-nav">
-            <!-- Authentication Links -->
             @guest
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -32,19 +24,21 @@
             @endif
             @else
             @if($isMobile)
-            <a class="mb-2" href="{{ route('users.show',['user' => auth()->user()])}}">
-                ユーザー情報
-            </a>
-            <a class="mb-2" href="{{ route('users.index',['user' => auth()->user()])}}">
-                ユーザー一覧
-            </a>
-            <a class="mt-2 text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                @csrf
-            </form>
+            <li class="nav-item dropdown card">
+                <a class="dropdown-item text-center" href="{{ route('users.show',['user' => auth()->user()])}}">
+                    ユーザー情報
+                </a>
+                <a class="dropdown-item text-center" href="{{ route('users.index',['user' => auth()->user()])}}">
+                    ユーザー一覧
+                </a>
+                <a class="dropdown-item text-center text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                    @csrf
+                </form>
+            </li>
             @else
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle ml-3" href="#" role="button" data-toggle="dropdown"

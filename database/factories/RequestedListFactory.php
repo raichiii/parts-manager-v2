@@ -23,7 +23,7 @@ class RequestedListFactory extends Factory
             'lot_size' => $this->faker->numberBetween($min = 1, $max = 1000),
             'lot_unit_id' => $this->faker->numberBetween($min = 1, $max = 4),
             'lot_amount' => $this->faker->numberBetween($min = 1, $max = 10),
-            'supplier_id' => Company::inRandomOrder()->first()->id,
+            'supplier_id' => $this->faker->numberBetween($min = 1, $max = 8),
             'unit_price' => $this->faker->numberBetween($min = 100, $max = 100000),
             'depository' => Str::random(3),
             'requested_user_id' => User::inRandomOrder()->first()->id,
