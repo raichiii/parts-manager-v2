@@ -1,5 +1,8 @@
 const { default: axios } = require("axios")
 
+const MODE_NORMAL = 0
+const MODE_PRESIDENT = 1
+
 Vue.component('chatgpt-index', {
     props: {
         propsChatgptApiUrl: String,
@@ -10,6 +13,7 @@ Vue.component('chatgpt-index', {
             chatHistories: [],
             mode: 0,
             isLoading: false,
+            prompt_president: "株式会社フレクトの代表取締役社長 黒川幸治になりきって回答してください。学生起業家でIT企業経営20年。前身IT会社の起業を経て、2005年に株式会社フレクトを設立。代表取締役CEOとしてクラウド事業へ参入とその事業基盤を構築、現在に至るまで当社経営の舵取りを行う。「インターネットを通じてみんなの人生満足を追求する」をミッションに掲げて、当社に関わるステークホルダーへの幸せと価値提供の最大化を目指す。",
         }
     },
     mounted() {
@@ -18,40 +22,32 @@ Vue.component('chatgpt-index', {
     methods: {
         question() {
             if (this.prompt === "") return
-            let prompt = this.prompt
-            this.prompt = ""
             setTimeout(() => this.changePromptHeight(), 1)
-            this.addChatgptHistory(prompt, textRight=true)
-            if (this.mode === 1) {
-                this.chatHistories.push(prompt)
-                prompt = ""
-                this.chatHistories.forEach(chatHistory => {
-                    prompt += `\n「${chatHistory}」`
-                })
-                console.log(prompt)
-            }
-            this.isLoading = true
+            this.addToTimeline(this.prompt, textRight=true)
+            this.chatHistories.push({ speaker: "client", text: this.prompt })
+            this.prompt = "" // Delete prompt from textarea
+            const preprompt = this.mode === MODE_PRESIDENT? [{ speaker: "client", text: this.prompt_president }] : []
+            const prompt = JSON.stringify([...preprompt, ...this.chatHistories])
             axios.post(this.propsChatgptApiUrl,
                 { content: prompt },
                 { headers: { "Content-Type": "application/json" } }
             ).then(res => {
                 this.isLoading = false
-                const reply = res.data.choices[0].message.content
-                console.log(reply)
-                if (this.mode === 1) {
-                    this.chatHistories.push(reply)
-                }
-                this.addChatgptHistory(reply, textRight=false)
+                const reply = res.data.content
+                this.chatHistories.push({speaker: "client", text: reply})
+                this.addToTimeline(reply, textRight=false)
             }).catch(err => {
                 this.isLoading = false
-                if (err.response.status === 429) {
-                    this.addChatgptHistory("1分程時間をおいてから試してください", textRight=false)
+                if (err.response.status) {
+                    if (err.response.status === 429) {
+                        this.addToTimeline("1分ほど時間をおいてから試してください", textRight = false)
+                    }
                 } else {
-                    this.addChatgptHistory("予期せぬエラーが発生しました。再度お試しください。", textRight=false)
+                    this.addToTimeline("予期せぬエラーが発生しました。再度お試しください。", textRight=false)
                 }
             })
         },
-        addChatgptHistory(text, textRight=false) {
+        addToTimeline(text, textRight=false) {
             let newReplyElement = document.createElement("p")
             textRight? newReplyElement.classList.add("chatgpt-text-right") : newReplyElement.classList.add("chatgpt-text-left")
             ac = this.$refs.chatHistory.appendChild(newReplyElement)
@@ -92,13 +88,13 @@ Vue.component('chatgpt-index', {
                 clearInterval(chatgptInterval)
                 setTimeout(() => {
                     this.writeChatgpt(...args)
-                }, 200)
+                }, 100)
             }
             const handlePeriod = (...args) => {
                 clearInterval(chatgptInterval)
                 setTimeout(() => {
                     this.writeChatgpt(...args)
-                }, 500)
+                }, 300)
             }
         },
         changePromptHeight() {
@@ -107,11 +103,10 @@ Vue.component('chatgpt-index', {
             this.$refs.prompt.style.height = sh + 10 + 'px'
         },
         placeholderByMode() {
-            if (this.mode === 0) {
-                return "Windowsパソコンを再起動するショートカットを教えてください"
-            } else if (this.mode === 1) {
-                return "御社の将来の目標は何ですか？"
-            }
+            return [
+                "Windowsパソコンを再起動するショートカットを教えてください",
+                "御社の将来の目標は何ですか？",
+            ][this.mode]
         }
     }
 })

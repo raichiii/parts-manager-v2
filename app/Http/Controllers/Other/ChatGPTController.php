@@ -25,61 +25,29 @@ class ChatGPTController extends Controller
      */
     public function chat(Request $request)
     {
+        $llm_api_key = env('GROQ_API_KEY');
+        $llm_api_url = env('GROQ_API_URL');
+        $llm_api_model = env('GROQ_MODEL');
         try {
-            $resp = env('APP_DEBUG')?
-                $this->chatOnDebug($request) :
-                $this->chatOnProduct($request);
-
-            return response()->json($resp);
+            $resp = \Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Authorization' => "Bearer $llm_api_key",
+            ])->post($llm_api_url, [
+                'model' => $llm_api_model,
+                'input' => $request->content,
+            ]);
+            $resp = $resp->object()->output;
+            $output = "";
+            foreach ($resp as $content) {
+                foreach ($content->content as $reply) {
+                    if ($reply->type == "output_text") {
+                        $output .= $reply->text;
+                    }
+                }
+            }
+            return response()->json(['content' => $output]);
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 500);
         }
-    }
-
-    /**
-     * ChatGPT用API
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function chatOnProduct(Request $request)
-    {
-        $apikey = env('CHATGPT_APIKEY');
-        $api_url = env('CHATGPT_API_URL');
-        $prefix = file_get_contents(env('CHATGPT_PROMPT_PREFIX_TXT'));
-        $resp = \Http::withHeaders([
-            'Content-Type' => 'application/json',
-            // 'Accept' => 'application/json',
-            'Authorization' => "Bearer $apikey",
-        ])->post($api_url, [
-            'model' => env('CHATGPT_MODEL'),
-            'input' => "$prefix$request->content",
-        ]);
-        return $resp->json();
-    }
-
-    /**
-     * ChatGPT用API（デバッグモード）
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function chatOnDebug(Request $request)
-    {
-        $apikey = env('CHATGPT_APIKEY_TEST');
-        $api_url = env('CHATGPT_API_URL_TEST');
-        $prefix = file_get_contents(env('CHATGPT_PROMPT_PREFIX_TXT'));
-        $resp = \Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'Authorization' => "Bearer $apikey",
-        ])->post($api_url, [
-            'messages' => [
-                [ 'role' => 'system', 'content' => $prefix ],
-                [ 'role' => 'user', 'content' => $request->content ]
-            ],
-            'model' => env('CHATGPT_MODEL_TEST'),
-            'temperature' => 1.0,
-            'top_p' => 1.0,
-            'max_tokens' => 1000,
-        ],);
-        return $resp->json();
     }
 }
