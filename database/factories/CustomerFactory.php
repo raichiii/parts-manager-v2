@@ -20,9 +20,12 @@ class CustomerFactory extends Factory
      */
     public function definition(): array
     {
+        $name = $this->faker->name;
+        $furigana = get_furigana($name);
         return [
             'office_id' => Office::inRandomOrder()->first()->id,
-            'name' => $this->faker->name(),
+            'name' => $name,
+            'furigana' => $furigana,
         ];
     }
 }
