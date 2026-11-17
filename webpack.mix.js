@@ -14,6 +14,7 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/components/order/CheckAll.js', 'public/js')
     .js('resources/js/components/layout/ToggleSidebar.js', 'public/js')
+    .version();
 mix.sass('resources/sass/app.scss', 'public/css', {
     implementation: require('node-sass')
 });
