@@ -73,12 +73,7 @@
     <p class="text-center">Other</p>
     <tr>
         <td>
-            <div class="sidebar-item-color h4 text-center"><a href="{{route('accountLists.index')}}">仕入れ先用<br>アカウント一覧</a></div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <div class="sidebar-item-color h4 text-center"><a href="{{route('textInfos.index')}}">テキスト情報検索</a></div>
+            <div class="sidebar-item-color h4 text-center"><a href="{{route('chatgpt.index')}}">ChatGPT</a></div>
         </td>
     </tr>
     <tr>

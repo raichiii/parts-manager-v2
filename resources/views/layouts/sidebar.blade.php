@@ -167,16 +167,6 @@
     <p>Other</p>
     <tr>
         <td>
-            <p class="sidebar-item sidebar-item-color"><a href="{{route('accountLists.index')}}">仕入れ先用<br>アカウント一覧</a></p>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <p class="sidebar-item sidebar-item-color"><a href="{{route('textInfos.index')}}">テキスト情報検索</a></p>
-        </td>
-    </tr>
-    <tr>
-        <td>
             <p class="sidebar-item sidebar-item-color"><a href="{{route('chatgpt.index')}}">ChatGPT</a></p>
         </td>
     </tr>
